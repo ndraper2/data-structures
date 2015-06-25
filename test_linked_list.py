@@ -21,9 +21,15 @@ def test_node_init():
     assert node.next is None
 
 
+def test_node_bad_init():
+    with pytest.raises(TypeError):
+        node = Node(24, 'blah', 'blah')
+
+
 def test_empty_list():
     list = LinkedList()
     assert isinstance(list, LinkedList)
+    assert list.head is None
 
 
 def test_insert():
@@ -36,13 +42,35 @@ def test_size(full_list):
     assert full_list.size == 4
 
 
+def test_list_init_iterable():
+    list = LinkedList([5, True, 'string'])
+    assert list.head.value == 'string'
+    assert list.size == 3
+    assert list.search(True).value is True
+
+
+def test_list_init_not_iterable():
+    with pytest.raises(TypeError):
+        list = LinkedList(534)
+
+
 def test_pop(full_list):
     assert full_list.pop() == 10
     assert full_list.size == 3
 
 
+def test_pop_empty_list():
+    list = LinkedList()
+    with pytest.raises(IndexError):
+        list.pop()
+
+
 def test_search(full_list):
     assert full_list.search(5).value == 5
+
+
+def test_search_nonexistent(full_list):
+    assert full_list.search(18) is None
 
 
 def test_remove(full_list):
@@ -65,3 +93,8 @@ def test_remove_bad_type(full_list):
 
 def test_display(full_list):
     assert full_list.display() == (10, 5, 'a string', True)
+
+
+def test_display_empty_list():
+    list = LinkedList()
+    assert list.display() == ()

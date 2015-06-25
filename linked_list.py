@@ -21,6 +21,8 @@ class LinkedList(object):
         self.size += 1
 
     def pop(self):
+        if not self.head:
+            raise IndexError("List is empty!")
         return_val = self.head.value
         self.head = self.head.next
         self.size -= 1
