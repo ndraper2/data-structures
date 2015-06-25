@@ -61,15 +61,16 @@ class LinkedList(object):
 
     def display(self):
         """Return a tuple containing all the elements of the list."""
-        temp_list = []
+        display_string = ''
         iter_node = self.head
         while iter_node:
-            temp_list.append(iter_node.value)
+            display_string += "{},".format(iter_node.value)
             iter_node = iter_node.next
-        return tuple(temp_list)
+        display_string = "({})".format(display_string.rstrip(','))
+        return display_string
 
     def __str__(self):
-        return str(self.display())
+        return self.display()
 
     def __repr__(self):
-        return str(self.display())
+        return self.display()
