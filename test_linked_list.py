@@ -111,3 +111,8 @@ def test_display_empty_list():
 
 def test_string(full_list):
     assert str(full_list) == "(10, 5, u'a string', True)"
+
+
+def test_unicode():
+    list = LinkedList(['a ɶ character'])
+    assert list.display() == ('a ɶ character',)
