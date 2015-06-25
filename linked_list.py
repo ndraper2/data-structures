@@ -60,7 +60,7 @@ class LinkedList(object):
             raise ValueError('node not in list')
 
     def display(self):
-        """Return a tuple containing all the elements of the list."""
+        """Return a tuple-like string containing all the elements of the list."""
         display_string = ''
         iter_node = self.head
         while iter_node:
