@@ -39,13 +39,13 @@ def test_insert():
 
 
 def test_size(full_list):
-    assert full_list.size == 4
+    assert full_list.size() == 4
 
 
 def test_list_init_iterable():
     list = LinkedList([5, True, 'string'])
     assert list.head.value == 'string'
-    assert list.size == 3
+    assert list.size() == 3
     assert list.search(True).value is True
 
 
@@ -56,7 +56,7 @@ def test_list_init_not_iterable():
 
 def test_pop(full_list):
     assert full_list.pop() == 10
-    assert full_list.size == 3
+    assert full_list.size() == 3
 
 
 def test_pop_empty_list():
@@ -78,7 +78,7 @@ def test_remove(full_list):
     full_list.remove(node)
     assert full_list.search(5) is None
     assert full_list.head.next.value == 'a string'
-    assert full_list.size == 3
+    assert full_list.size() == 3
 
 
 def test_remove_last(full_list):
@@ -87,7 +87,7 @@ def test_remove_last(full_list):
     assert full_list.search(True) is None
     node2 = full_list.search('a string')
     assert node2.next is None
-    assert full_list.size == 3
+    assert full_list.size() == 3
 
 
 def test_remove_nonexistent(full_list):

@@ -12,7 +12,7 @@ class Node(object):
 class LinkedList(object):
     """Create a new LinkedList with optional given iterable of values."""
     def __init__(self, iterable=None):
-        self.size = 0
+        self._size = 0
         self.head = None
         if iterable:
             for item in iterable:
@@ -21,7 +21,7 @@ class LinkedList(object):
     def insert(self, value):
         """Create a new node and insert it a the head of the list."""
         self.head = Node(value, self.head)
-        self.size += 1
+        self._size += 1
 
     def pop(self):
         """Remove the head node from the list and return its value."""
@@ -29,12 +29,12 @@ class LinkedList(object):
             raise IndexError("List is empty!")
         return_val = self.head.value
         self.head = self.head.next
-        self.size -= 1
+        self._size -= 1
         return return_val
 
     def size(self):
         """Return the size of the list."""
-        return self.size
+        return self._size
 
     def search(self, value):
         """Return the node containing the provided value."""
@@ -54,7 +54,7 @@ class LinkedList(object):
             while iter_node.next:
                 if iter_node.next == node:
                     iter_node.next = iter_node.next.next
-                    self.size -= 1
+                    self._size -= 1
                     return None
                 iter_node = iter_node.next
             raise ValueError('node not in list')
