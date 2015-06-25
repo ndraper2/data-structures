@@ -81,6 +81,15 @@ def test_remove(full_list):
     assert full_list.size == 3
 
 
+def test_remove_last(full_list):
+    node = full_list.search(True)
+    full_list.remove(node)
+    assert full_list.search(True) is None
+    node2 = full_list.search('a string')
+    assert node2.next is None
+    assert full_list.size == 3
+
+
 def test_remove_nonexistent(full_list):
     with pytest.raises(ValueError):
         full_list.remove(Node(17))
