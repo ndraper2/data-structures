@@ -47,6 +47,7 @@ class LinkedList(object):
                     iter_node.next = iter_node.next.next
                     self.size -= 1
                     return None
+                iter_node = iter_node.next
             raise ValueError('node not in list')
 
     def display(self):
