@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-import linked_list
+from linked_list import LinkedList, Node
+import pytest
+
 
 @pytest.fixture
 def full_list():
@@ -39,4 +43,4 @@ def test_remove(full_list):
 
 
 def test_display(full_list):
-    assert full_list.display() = (10, 5)
+    assert full_list.display() == (10, 5)

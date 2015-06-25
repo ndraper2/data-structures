@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
 
 class Node(object):
@@ -18,7 +20,7 @@ class LinkedList(object):
         self.head = Node(value, self.head)
         self.size += 1
 
-    def pop(self, value):
+    def pop(self):
         return_val = self.head.value
         self.head = self.head.next
         self.size -= 1
@@ -43,6 +45,8 @@ class LinkedList(object):
             while iter_node.next:
                 if iter_node.next == node:
                     iter_node.next = iter_node.next.next
+                    self.size -= 1
+                    return None
             raise ValueError('node not in list')
 
     def display(self):
@@ -53,4 +57,8 @@ class LinkedList(object):
             iter_node = iter_node.next
         return tuple(temp_list)
 
+    def __str__(self):
+        return str(self.display())
 
+    def __repr__(self):
+        return str(self.display())
