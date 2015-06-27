@@ -19,7 +19,7 @@ def paren_check(string_to_check):
 
 
 def pair_check(string_to_check):
-    """Return a value indicating whether parentheses or brackets in a string match."""
+    """Return a value indicating whether parentheses or brackets in a string match and nest properly."""
     open_set = {'(', '[', '{'}
     closed_dict = {')': '(', ']': '[', '}': '{'}
     stack = Stack()
