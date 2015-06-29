@@ -26,6 +26,8 @@ class Queue(object):
 
     def dequeue(self):
         """Remove the tail node from the queue and return its value."""
+        if self._size == 0:
+            raise IndexError("Queue is empty!")
         value = self.tail.value
         self.tail = self.tail.next
         self._size -= 1

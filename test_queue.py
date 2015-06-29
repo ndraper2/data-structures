@@ -1,4 +1,4 @@
-#-*- coding:UTF-8 -*-
+# -*- coding:UTF-8 -*-
 from __future__ import unicode_literals
 import pytest
 from queue import Queue
@@ -39,3 +39,9 @@ def test_size(full_queue):
     assert full_queue.size() == 5
     full_queue.dequeue()
     assert full_queue.size() == 4
+
+
+def test_dequeue_empty():
+    queue = Queue()
+    with pytest.raises(IndexError):
+        queue.dequeue()
