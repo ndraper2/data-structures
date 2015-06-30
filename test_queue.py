@@ -50,5 +50,7 @@ def test_dequeue_empty():
 def test_dequeue_last_node():
     queue = Queue([5])
     queue.dequeue()
+    assert queue.tail is None
+    assert queue.head is None
     with pytest.raises(IndexError):
         queue.dequeue()
