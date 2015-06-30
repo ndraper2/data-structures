@@ -11,7 +11,7 @@ class Node(object):
 
 class DoubleList(object):
     def __init__(self):
-        self._size = 0
+        self.size = 0
         self.head = None
         self.tail = None
 
@@ -25,7 +25,7 @@ class DoubleList(object):
 
     def append(self, value):
         self.size += 1
-        self.tail = Node(value, self.tail)
+        self.tail = Node(value, None, self.tail)
         if not self.head:
             self.head = self.tail
         else:
@@ -36,10 +36,11 @@ class DoubleList(object):
             raise IndexError("List is empty!")
         return_val = self.head.value
         self.head = self.head.next
-        self.head.prev = None
-        self.size -= 1
-        if self.size == 0:
+        try:
+            self.head.prev = None
+        except AttributeError:
             self.tail = None
+        self.size -= 1
         return return_val
 
     def shift(self):
@@ -47,14 +48,12 @@ class DoubleList(object):
             raise IndexError("List is empty!")
         return_val = self.tail.value
         self.tail = self.tail.prev
-        self.tail.next = None
-        self.size -= 1
-        if self.size == 0:
+        try:
+            self.tail.next = None
+        except AttributeError:
             self.head = None
+        self.size -= 1
         return return_val
-
-    def size(self):
-        return self._size
 
     def search(self, value):
         iter_node = self.head
