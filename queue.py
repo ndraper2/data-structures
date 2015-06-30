@@ -31,6 +31,8 @@ class Queue(object):
         value = self.tail.value
         self.tail = self.tail.next
         self._size -= 1
+        if self._size == 0:
+            self.head = None
         return value
 
     def size(self):

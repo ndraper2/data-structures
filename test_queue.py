@@ -45,3 +45,10 @@ def test_dequeue_empty():
     queue = Queue()
     with pytest.raises(IndexError):
         queue.dequeue()
+
+
+def test_dequeue_last_node():
+    queue = Queue([5])
+    queue.dequeue()
+    with pytest.raises(IndexError):
+        queue.dequeue()
