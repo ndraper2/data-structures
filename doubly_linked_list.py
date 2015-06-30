@@ -36,11 +36,22 @@ class DoubleList(object):
             raise IndexError("List is empty!")
         return_val = self.head.value
         self.head = self.head.next
-        self._size -= 1
+        self.head.prev = None
+        self.size -= 1
+        if self.size == 0:
+            self.tail = None
         return return_val
 
-        def shift(self):
-
+    def shift(self):
+        if not self.tail:
+            raise IndexError("List is empty!")
+        return_val = self.tail.value
+        self.tail = self.tail.prev
+        self.tail.next = None
+        self.size -= 1
+        if self.size == 0:
+            self.head = None
+        return return_val
 
     def size(self):
         return self._size
@@ -53,31 +64,19 @@ class DoubleList(object):
             iter_node = iter_node.next
         return None
 
-    def remove(self, node):
-        if self.head is node:
-            self.head = self.head.next
-        else:
-            iter_node = self.head
-            while iter_node.next:
-                if iter_node.next is node:
-                    iter_node.next = iter_node.next.next
-                    self._size -= 1
-                    return None
-                iter_node = iter_node.next
-            raise ValueError('node not in list')
-
-    def display(self):
-        """Return a tuple-like string containing all the elements of the list."""
-        display_string = ''
+    def remove(self, value):
         iter_node = self.head
         while iter_node:
-            display_string += "{},".format(iter_node.value)
+            if iter_node.value == value:
+                try:
+                    iter_node.prev.next = iter_node.next
+                except AttributeError:
+                    self.head = iter_node.next
+                try:
+                    iter_node.next.prev = iter_node.prev
+                except AttributeError:
+                    self.tail = iter_node.prev
+                self.size -= 1
+                return
             iter_node = iter_node.next
-        display_string = "({})".format(display_string.rstrip(','))
-        return display_string
-
-    def __str__(self):
-        return self.display()
-
-    def __repr__(self):
-        return self.display()
+        raise ValueError('Value not in list')
