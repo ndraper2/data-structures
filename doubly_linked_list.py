@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 class Node(object):
     def __init__(self, value, next=None, prev=None):
+        """Create a new Node with a value and optional pointers."""
         self.value = value
         self.next = next
         self.prev = prev
@@ -11,11 +12,13 @@ class Node(object):
 
 class DoubleList(object):
     def __init__(self):
+        """Create a new doubly-linked list with zero items."""
         self.size = 0
         self.head = None
         self.tail = None
 
     def insert(self, value):
+        """Create a node and insert it at the head of the list."""
         self.size += 1
         self.head = Node(value, self.head)
         if not self.tail:
@@ -24,6 +27,7 @@ class DoubleList(object):
             self.head.next.prev = self.head
 
     def append(self, value):
+        """Create a node and append it to the end of the list."""
         self.size += 1
         self.tail = Node(value, None, self.tail)
         if not self.head:
@@ -32,6 +36,7 @@ class DoubleList(object):
             self.tail.prev.next = self.tail
 
     def pop(self):
+        """Remove the head node and return its value."""
         if not self.head:
             raise IndexError("List is empty!")
         return_val = self.head.value
@@ -44,6 +49,7 @@ class DoubleList(object):
         return return_val
 
     def shift(self):
+        """Remove the tail node and return its value."""
         if not self.tail:
             raise IndexError("List is empty!")
         return_val = self.tail.value
@@ -55,15 +61,10 @@ class DoubleList(object):
         self.size -= 1
         return return_val
 
-    def search(self, value):
-        iter_node = self.head
-        while iter_node:
-            if iter_node.value == value:
-                return iter_node
-            iter_node = iter_node.next
-        return None
-
     def remove(self, value):
+        """Search for a node with value.
+           Remove the node if it exists, otherwise raise a ValueError.
+        """
         iter_node = self.head
         while iter_node:
             if iter_node.value == value:
