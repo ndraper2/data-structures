@@ -33,11 +33,16 @@ def test_empty_list():
     assert list.tail is None
 
 
-def test_insert():
+def test_insert_empty():
     list = DoubleList()
     list.insert(5)
     assert list.head.value == 5
     assert list.tail.value == 5
+
+
+def test_insert_more():
+    list = DoubleList()
+    list.insert(5)
     list.insert(10)
     assert list.head.value == 10
     assert list.tail.value == 5
@@ -45,11 +50,16 @@ def test_insert():
     assert list.tail.prev.value == 10
 
 
-def test_append():
+def test_append_empty():
     list = DoubleList()
     list.append(5)
     assert list.tail.value == 5
     assert list.head.value == 5
+
+
+def tests_append_more():
+    list = DoubleList()
+    list.append(5)
     list.append(10)
     assert list.tail.value == 10
     assert list.head.value == 5
@@ -60,23 +70,32 @@ def test_append():
 def test_pop(full_list):
     assert full_list.pop() == 10
     assert full_list.size == 3
-    assert full_list.pop() == 5
-    assert full_list.pop() == 'a string'
+    full_list.pop()
+    full_list.pop()
     assert full_list.pop() is True
     assert full_list.size == 0
+
+
+def test_pop_empty():
+    mylist = DoubleList()
     with pytest.raises(IndexError):
-        full_list.pop()
+        mylist.pop()
 
 
 def test_shift(full_list):
+    # check each value for accuracy and that empty raises error
     assert full_list.shift() is True
     assert full_list.size == 3
-    assert full_list.shift() == 'a string'
-    assert full_list.shift() == 5
+    full_list.shift()
+    full_list.shift()
     assert full_list.shift() == 10
     assert full_list.size == 0
+
+
+def test_shift_empty():
+    mylist = DoubleList()
     with pytest.raises(IndexError):
-        full_list.shift()
+        mylist.shift()
 
 
 def test_remove(full_list):
@@ -84,9 +103,19 @@ def test_remove(full_list):
     assert full_list.size == 3
     with pytest.raises(ValueError):
         full_list.remove('a string')
+
+
+def test_remove_to_zero(full_list):
+    full_list.remove('a string')
     full_list.remove(5)
     full_list.remove(10)
     full_list.remove(True)
     assert full_list.size == 0
     assert full_list.head is None
     assert full_list.tail is None
+
+
+def test_remove_empty():
+    mylist = DoubleList()
+    with pytest.raises(ValueError):
+        mylist.remove(5)
