@@ -5,12 +5,16 @@ from __future__ import unicode_literals
 class BinHeap(object):
 
     def __init__(self, iterable=None):
+        """Create a new binary min-heap.
+           Insert values from an optional iterable.
+        """
         self.list = []
         if iterable:
             for item in iterable:
                 self.push(item)
 
     def push(self, value):
+        """Push a new value onto the heap, maintaining the heap property."""
         self.list.append(value)
         self._bubble_up(len(self.list) - 1)
 
@@ -23,6 +27,7 @@ class BinHeap(object):
             self._bubble_up((index - 1) // 2)
 
     def pop(self):
+        """Pop the top value off the heap, maintaining the heap property."""
         if len(self.list) == 1:
             return self.list.pop()
         try:
