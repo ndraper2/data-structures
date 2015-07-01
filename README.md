@@ -10,3 +10,5 @@ Queue - a First-In, First-Out (FIFO) structure with a similar basis as a linked 
 Doubly Linked List - similar to the linked list, but the list contains pointers to both the front and end, and each node has a pointer to its next and previous neighbors.
 
 One would use a singly linked list similarly to a stack; operation at the head of the list is significantly better than operation at the end. A doubly linked list is optimized for operations at either end; this can be used as either a stack or a queue, with the small overhead of a couple extra pointers.
+
+[![Build Status](https://travis-ci.org/ndraper2/data-structures.svg?branch=master)](https://travis-ci.org/ndraper2/data-structures)
