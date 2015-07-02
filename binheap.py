@@ -16,15 +16,15 @@ class BinHeap(object):
     def push(self, value):
         """Push a new value onto the heap, maintaining the heap property."""
         self.list.append(value)
-        self._bubble_up(len(self.list) - 1)
+        self._bubble_up()
 
-    def _bubble_up(self, index):
-        if index == 0:
-            return
-        if self.list[index] < self.list[(index - 1) // 2]:
-            self.list[index], self.list[(index - 1) // 2] = (
-                self.list[(index - 1) // 2], self.list[index])
-            self._bubble_up((index - 1) // 2)
+    def _bubble_up(self):
+        i = len(self.list) - 1
+        while (i - 1) // 2 >= 0:
+            if self.list[i] < self.list[(i - 1) // 2]:
+                self.list[i], self.list[(i - 1) // 2] = (
+                    self.list[(i - 1) // 2], self.list[i])
+            i = (i - 1) // 2
 
     def pop(self):
         """Pop the top value off the heap, maintaining the heap property."""
@@ -35,17 +35,17 @@ class BinHeap(object):
         except IndexError:
             raise IndexError('Heap is empty!')
         self.list[0] = self.list.pop()
-        self._bubble_down(0)
+        self._bubble_down()
         return return_val
 
-    def _bubble_down(self, index):
-        if index * 2 >= len(self.list) - 1:
-            return
-        child = self._min_child(index)
-        if self.list[index] > self.list[child]:
-            self.list[index], self.list[child] = (
-                self.list[child], self.list[index])
-            self._bubble_down(child)
+    def _bubble_down(self):
+        i = 0
+        while i * 2 + 1 <= len(self.list) - 1:
+            child = self._min_child(i)
+            if self.list[i] > self.list[child]:
+                self.list[i], self.list[child] = (
+                    self.list[child], self.list[i])
+            i = child
 
     def _min_child(self, index):
         if index * 2 + 2 > len(self.list) - 1:
