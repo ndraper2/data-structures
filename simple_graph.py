@@ -21,7 +21,8 @@ class Graph(object):
         return self.edges
 
     def add_node(self, n):
-        """Add a node n into the graph."""
+        """Add a node n into the graph.
+        Nodes must be hashable."""
         self.gdict.setdefault(n, [])
 
     def add_edge(self, n1, n2):
