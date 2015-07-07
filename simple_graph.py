@@ -26,7 +26,7 @@ class Graph(object):
 
     def add_edge(self, n1, n2):
         """Add an edge connecting n1 and n2 to the graph."""
-        self.gdict[n1].setdefault(n2, [])
+        self.gdict.setdefault(n2, [])
         try:
             self.gdict[n1].append(n2)
         except KeyError:
@@ -38,7 +38,7 @@ class Graph(object):
             del self.gdict[n]
         except KeyError:
             raise KeyError('{} not in the graph.'.format(n))
-        for nodelist in self.gdit.values():
+        for nodelist in self.gdict.values():
             try:
                 nodelist.remove(n)
             except ValueError:
@@ -47,8 +47,8 @@ class Graph(object):
     def del_edge(self, n1, n2):
         """Delete the edge connecting n1 and n2 from the graph."""
         try:
-            self.gdict[n1].remove[n2]
-        except KeyError, ValueError:
+            self.gdict[n1].remove(n2)
+        except (KeyError, ValueError):
             raise ValueError('Edge {}, {} not in the graph.'.format(n1, n2))
 
     def has_node(self, n):
@@ -64,6 +64,6 @@ class Graph(object):
 
     def adjacent(self, n1, n2):
         """Return True if there is an edge connecting n1 and n2, else False."""
-        if n1 not in self.dict or n2 not in self.gdict:
+        if n1 not in self.gdict or n2 not in self.gdict:
             raise KeyError('One of these nodes is not in the graph.')
         return n2 in self.gdict[n1]
