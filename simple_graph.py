@@ -70,29 +70,7 @@ class Graph(object):
         return n2 in self.gdict[n1]
 
     def depth_first_traversal(self, start):
-        return self._depth_first_traversal(start, [])
-
-    def _depth_first_traversal(self, current, visited):
-        visited.append(current)
-        for neighbor in self.neighbors(current):
-            if neighbor not in visited:
-                self._depth_first_traversal(neighbor, visited)
-        return visited
-
-    def breadth_first_traversal(self, start):
-        from queue import Queue
-        q = Queue()
-        q.enqueue(start)
-        visited = [start]
-        while q.size() > 0:
-            current = q.dequeue()
-            for neighbor in current.neighbors():
-                if neighbor not in visited:
-                    q.enqueue(neighbor)
-                    visited.append(neighbor)
-        return visited
-
-    def depth_first_traversal(self, start):
+        """Perform a depth first traversal on a graph starting at the given node"""
         from stack import Stack
         s = Stack()
         s.push(start)
@@ -104,5 +82,19 @@ class Graph(object):
                 return visited
             if current not in visited:
                 visited.append(current)
-                for neighbor in current.neighbors():
+                for neighbor in self.neighbors(current):
                     s.push(neighbor)
+
+    def breadth_first_traversal(self, start):
+        """Perform a breadth first traversal on a graph starting at the given node"""
+        from queue import Queue
+        q = Queue()
+        q.enqueue(start)
+        visited = [start]
+        while q.size() > 0:
+            current = q.dequeue()
+            for neighbor in self.neighbors(current):
+                if neighbor not in visited:
+                    q.enqueue(neighbor)
+                    visited.append(neighbor)
+        return visited

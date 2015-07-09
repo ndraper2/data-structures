@@ -20,6 +20,22 @@ def full_graph():
     return g
 
 
+@pytest.fixture
+def cyclic_graph():
+    g = Graph()
+    g.add_node(3)
+    g.add_node(10)
+    g.add_node(5)
+    g.add_node(2)
+    g.add_node(7)
+    g.add_edge(3, 10)
+    g.add_edge(3, 5)
+    g.add_edge(10, 5)
+    g.add_edge(5, 2)
+    g.add_edge(2, 7)
+    return g
+
+
 def test_init():
     g = Graph()
     assert g.gdict == {}
@@ -105,3 +121,35 @@ def test_adjacent_nonexistent(full_graph):
         full_graph.adjacent(15, 19)
     with pytest.raises(KeyError):
         full_graph.adjacent(19, 15)
+
+
+def test_depth_first_traversal(full_graph):
+    full_graph.add_edge(10, 9)
+    assert full_graph.depth_first_traversal(14) == [14, 3, 10, 9, 7, 15]
+
+
+def test_depth_first_traversal_partial(full_graph):
+    full_graph.add_edge(10, 9)
+    assert full_graph.depth_first_traversal(7) == [7, 15, 10, 9]
+
+
+def test_depth_first_traversal_cyclic(cyclic_graph):
+    assert cyclic_graph.depth_first_traversal(3) == [3, 5, 2, 7, 10]
+
+
+def test_breadth_first_traversal(full_graph):
+    full_graph.add_edge(10, 9)
+    assert full_graph.breadth_first_traversal(14) == [14, 3, 7, 10, 15, 9]
+
+
+def test_breadth_first_traversal_partial(full_graph):
+    full_graph.add_edge(10, 9)
+    assert full_graph.breadth_first_traversal(7) == [7, 15, 10, 9]
+
+
+def test_breadth_first_traversal_cyclic(cyclic_graph):
+    assert cyclic_graph.breadth_first_traversal(3) == [3, 10, 5, 2, 7]
+
+
+
+
