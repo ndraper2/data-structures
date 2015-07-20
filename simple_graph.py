@@ -26,12 +26,12 @@ class Graph(object):
         self.gdict.setdefault(n, {})
 
     def add_edge(self, n1, n2, weight):
-        """Add an edge connecting n1 and n2 to the graph."""
+        """Add an edge connecting n1 and n2 to the graph with specified weight."""
         self.gdict.setdefault(n2, {})
         try:
             self.gdict[n1][n2] = weight
         except KeyError:
-            self.gdict[n1] = {n2:weight}
+            self.gdict[n1] = {n2: weight}
 
     def del_node(self, n):
         """Delete node n from the graph."""
@@ -100,8 +100,6 @@ class Graph(object):
         return visited
 
 
-
-
 if __name__ == '__main__':
     from random import randint
     from timeit import Timer
@@ -109,7 +107,7 @@ if __name__ == '__main__':
     for i in range(500):
         graph1.add_node(i)
     for i in range(750):
-        graph1.add_edge(randint(1, 499), randint(1, 499))
+        graph1.add_edge(randint(1, 499), randint(1, 499), randint(1, 50))
     print ('Depth First Traversal of random graph with 500 elements and '
            '750 edges, run 1000 times.')
     print Timer('graph1.depth_first_traversal(50)',
