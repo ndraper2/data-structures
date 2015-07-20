@@ -12,11 +12,11 @@ def full_graph():
     g.add_node(15)
     g.add_node(7)
     g.add_node(14)
-    g.add_edge(3, 7)
-    g.add_edge(15, 10)
-    g.add_edge(14, 3)
-    g.add_edge(3, 10)
-    g.add_edge(7, 15)
+    g.add_edge(3, 7, 1)
+    g.add_edge(15, 10, 2)
+    g.add_edge(14, 3, 3)
+    g.add_edge(3, 10, 4)
+    g.add_edge(7, 15, 5)
     return g
 
 
@@ -28,11 +28,12 @@ def cyclic_graph():
     g.add_node(5)
     g.add_node(2)
     g.add_node(7)
-    g.add_edge(3, 10)
-    g.add_edge(3, 5)
-    g.add_edge(10, 5)
-    g.add_edge(5, 2)
-    g.add_edge(2, 7)
+    g.add_edge(3, 10, 1)
+    g.add_edge(3, 5, 2)
+    g.add_edge(10, 5, 3)
+    g.add_edge(5, 2, 4)
+    g.add_edge(2, 7, 5)
+    g.add_edge(5, 3, 5)
     return g
 
 
@@ -44,19 +45,19 @@ def test_init():
 def test_add_node():
     g = Graph()
     g.add_node(5)
-    assert g.gdict == {5: []}
+    assert g.gdict == {5: {}}
 
 
 def test_add_edge():
     g = Graph()
     g.add_node(5)
     g.add_node(10)
-    g.add_edge(5, 10)
-    assert g.gdict[5] == [10]
+    g.add_edge(5, 10, 6)
+    assert g.gdict[5] == {10: 6}
 
 
 def test_add_edge_new_nodes(full_graph):
-    full_graph.add_edge(18, 4)
+    full_graph.add_edge(18, 4, 6)
     assert 18 in full_graph.gdict
     assert 4 in full_graph.gdict
     assert 4 in full_graph.gdict[18]
@@ -71,9 +72,9 @@ def test_nodes(full_graph):
 
 def test_edges(full_graph):
     edges = full_graph.edges()
-    assert (3, 7) in edges
-    assert (14, 3) in edges
-    assert (7, 15) in edges
+    assert (3, 7, 1) in edges
+    assert (14, 3, 3) in edges
+    assert (7, 15, 5) in edges
 
 
 def test_del_node(full_graph):
@@ -124,12 +125,16 @@ def test_adjacent_nonexistent(full_graph):
 
 
 def test_depth_first_traversal(full_graph):
-    full_graph.add_edge(10, 9)
-    assert full_graph.depth_first_traversal(14) == [14, 3, 10, 9, 7, 15]
+    full_graph.add_edge(10, 9, 7)
+    depth_list = full_graph.depth_first_traversal(14)
+    if depth_list.index(10) < depth_list.index(7):
+        assert depth_list == [14, 3, 10, 9, 7, 15]
+    else: 
+        assert depth_list == [14, 3, 7, 15, 10, 9]
 
 
 def test_depth_first_traversal_partial(full_graph):
-    full_graph.add_edge(10, 9)
+    full_graph.add_edge(10, 9, 7)
     assert full_graph.depth_first_traversal(7) == [7, 15, 10, 9]
 
 
@@ -138,18 +143,20 @@ def test_depth_first_traversal_cyclic(cyclic_graph):
 
 
 def test_breadth_first_traversal(full_graph):
-    full_graph.add_edge(10, 9)
-    assert full_graph.breadth_first_traversal(14) == [14, 3, 7, 10, 15, 9]
+    full_graph.add_edge(10, 9, 7)
+    breadth_list = full_graph.breadth_first_traversal(14)
+    if breadth_list.index(10) < breadth_list.index(7):
+        assert breadth_list == [14, 3, 10, 7, 9, 15]
+    else: 
+        assert breadth_list == [14, 3, 7, 10, 15, 9]
 
 
 def test_breadth_first_traversal_partial(full_graph):
-    full_graph.add_edge(10, 9)
+    full_graph.add_edge(10, 9, 7)
     assert full_graph.breadth_first_traversal(7) == [7, 15, 10, 9]
 
 
 def test_breadth_first_traversal_cyclic(cyclic_graph):
     assert cyclic_graph.breadth_first_traversal(3) == [3, 10, 5, 2, 7]
-
-
 
 
