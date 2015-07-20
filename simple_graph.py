@@ -59,7 +59,7 @@ class Graph(object):
     def neighbors(self, n):
         """Return the list of nodes n is pointing to."""
         try:
-            return self.gdict[n]
+            return self.gdict[n].keys()
         except KeyError:
             raise KeyError('{} not in the graph.'.format(n))
 
