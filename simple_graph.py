@@ -17,21 +17,21 @@ class Graph(object):
         self.edges = []
         for node in self.gdict:
             for end in self.gdict[node]:
-                self.edges.append((node, end))
+                self.edges.append((node, end, self.gdict[node][end]))
         return self.edges
 
     def add_node(self, n):
         """Add a node n into the graph.
         Nodes must be hashable."""
-        self.gdict.setdefault(n, [])
+        self.gdict.setdefault(n, {})
 
-    def add_edge(self, n1, n2):
+    def add_edge(self, n1, n2, weight):
         """Add an edge connecting n1 and n2 to the graph."""
-        self.gdict.setdefault(n2, [])
+        self.gdict.setdefault(n2, {})
         try:
-            self.gdict[n1].append(n2)
+            self.gdict[n1][n2] = weight
         except KeyError:
-            self.gdict[n1] = [n2]
+            self.gdict[n1] = {n2:weight}
 
     def del_node(self, n):
         """Delete node n from the graph."""
@@ -39,16 +39,16 @@ class Graph(object):
             del self.gdict[n]
         except KeyError:
             raise KeyError('{} not in the graph.'.format(n))
-        for nodelist in self.gdict.values():
+        for nodedict in self.gdict.values():
             try:
-                nodelist.remove(n)
-            except ValueError:
+                del nodedict[n]
+            except KeyError:
                 continue
 
     def del_edge(self, n1, n2):
         """Delete the edge connecting n1 and n2 from the graph."""
         try:
-            self.gdict[n1].remove(n2)
+            del self.gdict[n1][n2]
         except (KeyError, ValueError):
             raise ValueError('Edge {}, {} not in the graph.'.format(n1, n2))
 
@@ -98,6 +98,8 @@ class Graph(object):
                     q.enqueue(neighbor)
                     visited.append(neighbor)
         return visited
+
+
 
 
 if __name__ == '__main__':
