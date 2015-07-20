@@ -98,3 +98,20 @@ class Graph(object):
                     q.enqueue(neighbor)
                     visited.append(neighbor)
         return visited
+
+
+if __name__ == '__main__':
+    from random import randint
+    from timeit import Timer
+    graph1 = Graph()
+    for i in range(500):
+        graph1.add_node(i)
+    for i in range(750):
+        graph1.add_edge(randint(1, 499), randint(1, 499))
+    print ('Depth First Traversal of random graph with 500 elements and '
+           '750 edges, run 1000 times.')
+    print Timer('graph1.depth_first_traversal(50)',
+                'from __main__ import graph1').timeit(1000)
+    print ('Breadth First Traversal of the same graph, performed 1000 times.')
+    print Timer('graph1.breadth_first_traversal(50)',
+                'from __main__ import graph1').timeit(1000)
