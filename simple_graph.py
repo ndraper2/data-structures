@@ -15,11 +15,11 @@ class Graph(object):
 
     def edges(self):
         """Return a list of edges in the graph."""
-        self.edges = []
+        self._edges = []
         for node in self.gdict:
             for end in self.gdict[node]:
-                self.edges.append((node, end, self.gdict[node][end]))
-        return self.edges
+                self._edges.append((node, end, self.gdict[node][end]))
+        return self._edges
 
     def add_node(self, n):
         """Add a node n into the graph.
@@ -120,6 +120,28 @@ class Graph(object):
                     dist[neighbor] = alt_dist
                     prev[neighbor] = node
                     heapq.heappush(pq, (alt_dist, neighbor))
+
+        return dist, prev
+
+    def bellman_ford(self, source):
+        dist = {}
+        prev = {}
+
+        for node in self.nodes():
+            dist[node] = float('inf')
+            prev[node] = None
+        dist[source] = 0
+
+        for node in self.nodes():
+            for n1, n2, weight in self.edges():
+                if dist[n1] + weight < dist[n2]:
+                    dist[n2] = dist[n1] + weight
+                    prev[n2] = n1
+
+        for n1, n2, weight in self.edges():
+            if dist[n1] + weight < dist[n2]:
+                raise ValueError('Graph contains a negative-weight cycle')
+        return dist, prev
 
 
 if __name__ == '__main__':

@@ -129,7 +129,7 @@ def test_depth_first_traversal(full_graph):
     depth_list = full_graph.depth_first_traversal(14)
     if depth_list.index(10) < depth_list.index(7):
         assert depth_list == [14, 3, 10, 9, 7, 15]
-    else: 
+    else:
         assert depth_list == [14, 3, 7, 15, 10, 9]
 
 
@@ -147,7 +147,7 @@ def test_breadth_first_traversal(full_graph):
     breadth_list = full_graph.breadth_first_traversal(14)
     if breadth_list.index(10) < breadth_list.index(7):
         assert breadth_list == [14, 3, 10, 7, 9, 15]
-    else: 
+    else:
         assert breadth_list == [14, 3, 7, 10, 15, 9]
 
 
@@ -160,3 +160,32 @@ def test_breadth_first_traversal_cyclic(cyclic_graph):
     assert cyclic_graph.breadth_first_traversal(3) == [3, 10, 5, 2, 7]
 
 
+def test_dijkstras_algorithm(full_graph):
+    distance, previous = full_graph.dijkstras_algorithm(3)
+    assert distance[15] == 6
+    assert distance[14] == float('inf')
+    assert previous[15] == 7
+    assert previous[14] is None
+
+
+def test_bellman_ford(full_graph):
+    distance, previous = full_graph.bellman_ford(3)
+    assert distance[15] == 6
+    assert distance[14] == float('inf')
+    assert previous[15] == 7
+    assert previous[14] is None
+
+
+def test_bellman_ford_negative(full_graph):
+    full_graph.add_edge(3, 15, -2)
+    full_graph.add_edge(15, 3, -5)
+    with pytest.raises(ValueError):
+        full_graph.bellman_ford(3)
+
+
+# This produced an infinite cycle, which is what we wanted.
+# Not sure how to make pytest ask for an break out of a cycle, though.
+# def test_dijkstras_algorithm_negative(full_graph):
+#     full_graph.add_edge(3, 15, -2)
+#     full_graph.add_edge(15, 3, -5)
+#     full_graph.dijkstras_algorithm(3)
