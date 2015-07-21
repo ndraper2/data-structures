@@ -101,6 +101,12 @@ class Graph(object):
         return visited
 
     def dijkstras_algorithm(self, source):
+        """Implement Dijkstra's algorithm on the graph.
+
+        Take in a source node and return two dictionaries. The first is a
+        dict of the nodes and their distance from source. The second is a
+        dict of nodes with the previous node in their path to source.
+        """
         dist = {}
         prev = {}
         pq = []
@@ -124,6 +130,15 @@ class Graph(object):
         return dist, prev
 
     def bellman_ford(self, source):
+        """Implement the Bellman-Ford algorithm on the graph.
+
+        Take in a source node and return two dictionaries. The first is a
+        dict of the nodes and their distance from source. The second is a
+        dict of nodes with the previous node in their path to source.
+
+        This algorithm checks for negative cycles and raises an error if
+        one is encountered.
+        """
         dist = {}
         prev = {}
 
