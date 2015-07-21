@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import heapq
 
 
 class Graph(object):
@@ -98,6 +99,27 @@ class Graph(object):
                     q.enqueue(neighbor)
                     visited.append(neighbor)
         return visited
+
+    def dijkstras_algorithm(self, source):
+        dist = {}
+        prev = {}
+        pq = []
+
+        for node in self.nodes():
+            dist[node] = float('inf')
+            prev[node] = None
+
+        dist[source] = 0
+        heapq.heappush(pq, (0, source))
+
+        while pq:
+            distance, node = heapq.heappop(pq)
+            for neighbor in self.neighbors(node):
+                alt_dist = distance + self.gdict[node][neighbor]
+                if alt_dist < dist[neighbor]:
+                    dist[neighbor] = alt_dist
+                    prev[neighbor] = node
+                    heapq.heappush(pq, (alt_dist, neighbor))
 
 
 if __name__ == '__main__':
